@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TELEVISION SHOWS</title>
+    <style>
+        body{
+            background-color: palevioletred;
+        }
+    </style>
+  </head>
+  <body>
+    <div class="main">
+      <h2>TELEVISION SHOWS </h2>
+      <form>
+        <input type="search" id="search-input" placeholder ="search for tv shows.."/>
+        <input type="GO" value="GO" id="search-btn" />
+      </form>
+    </div>
+    <script>
+let query = document.getElementById("search-input");
+let searchBtn = document.getElementById("search-btn");
+let outerdiv = document.createElement("div");
+outerdiv.classList.add("outer-div");
+searchBtn.addEventListener("click", (e) => {
+  e.preventDefault();
+  let queryval = query.value;
+  let url = `http://api.tvmaze.com/search/shows?q=${queryval}`;
+  outerdiv.innerHTML = "";
+  async function tvshows() {
+    let resp = await fetch(url);
+    let Details = await resp.json();
+    Details.forEach((data) => {
+      console.log(data);
+      let newdiv = document.createElement("div");
+      newdiv.classList.add("new-div");
+
+      let titleImg = document.createElement("img");
+      titleImg.src = data.show.image.medium;
+
+      let gettitle = document.createElement("h2");
+      gettitle.innerText = data.show.name;
+      gettitle.classList.add("series-title");
+
+      let showgenre = document.createElement("p");
+       showgenre.innerText = `Genre: ${data.show.genres[0]}`;
+
+      let showData = document.createElement("p");
+     showData.innerText = `Premeried on: ${data.show.premiered}`;
+
+      let gettime = document.createElement("p");
+      gettime.innerText = `Show time: ${data.show.schedule.time}`;
+
+     
+      newdiv.appendChild(titleImg);
+      newdiv.appendChild(gettitle);
+      newdiv.appendChild(showgenre);
+      newdiv.appendChild(showData);
+      newdiv.appendChild(gettime);
+      outerdiv.appendChild(newdiv);
+      document.body.appendChild(outerdiv);
+    });
+  }
+  tvshows();
+});
+    </script>
+  </body>
+</html>
