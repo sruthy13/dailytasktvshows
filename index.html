@@ -27,7 +27,7 @@ outerdiv.classList.add("outer-div");
 searchBtn.addEventListener("click", (e) => {
   e.preventDefault();
   let queryval = query.value;
-  let url = `http://api.tvmaze.com/search/shows?q=${queryval}`;
+  let url = `https://api.tvmaze.com/search/shows?q=${queryval}`;
   outerdiv.innerHTML = "";
   async function tvshows() {
     let resp = await fetch(url);
